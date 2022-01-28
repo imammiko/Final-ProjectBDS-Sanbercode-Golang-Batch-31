@@ -62,10 +62,9 @@ func (s *jwtService) ExtractToken(c *gin.Context) string {
 		return token
 	}
 	bearerToken := c.Request.Header.Get("Authorization")
-	if len(strings.Split(bearerToken, " ")) == 2 {
-		return strings.Split(bearerToken, " ")[1]
-	}
-	return ""
+	fmt.Println(bearerToken)
+
+	return strings.Trim(bearerToken, " ")
 }
 
 func (s *jwtService) ExtractTokenID(c *gin.Context) (uint, error) {

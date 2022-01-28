@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"Final-ProjectBDS-Sanbercode-Golang-Batch-31/utils/auth"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -19,6 +20,7 @@ func (u userMiddleware) JwtAuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		err := u.authService.TokenValid(c)
 		if err != nil {
+			fmt.Println("masuk sini")
 			c.String(http.StatusUnauthorized, err.Error())
 			c.Abort()
 			return
