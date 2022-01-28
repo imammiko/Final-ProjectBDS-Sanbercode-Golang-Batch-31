@@ -21,5 +21,7 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	r.GET("/forgotPassword", userController.ForgetPassword)
 	r.POST("/changePassword", userController.ChangePassword)
 
+	// productMiddlewareRoute := r.Group()
+
 	return r
 }

@@ -32,6 +32,8 @@ type (
 		StatusPayment  StatusPayment `gorm:"type:ENUM('paid','unpaid');"`
 		PhoneNumber    string
 		UserID         int
+		OrderDetails   []OrderDetail  `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+		Confrimations  []Confrimation `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 		CreatedAt      time.Time
 		UpdatedAt      time.Time
 	}
