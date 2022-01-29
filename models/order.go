@@ -24,17 +24,17 @@ func (e StatusPayment) Value() (driver.Value, error) {
 
 type (
 	Order struct {
-		ID             int `gorm:"primary_key"`
-		RecipientsName string
-		OrderDate      time.Time
-		City           string
-		Address        string
-		StatusPayment  StatusPayment `gorm:"type:ENUM('paid','unpaid');"`
-		PhoneNumber    string
-		UserID         int
-		OrderDetails   []OrderDetail  `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-		Confrimations  []Confrimation `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-		CreatedAt      time.Time
-		UpdatedAt      time.Time
+		ID             int            `gorm:"primary_key" json:"id"`
+		RecipientsName string         `json:"recipientsName"`
+		OrderDate      time.Time      `json:"orderDate"`
+		City           string         `json:"city"`
+		Address        string         `json:"address"`
+		StatusPayment  StatusPayment  `gorm:"type:ENUM('paid','unpaid');" json:"statusPayment"`
+		PhoneNumber    string         `json:"phoneNumber"`
+		UserID         int            `json:"userID"`
+		OrderDetails   []OrderDetail  `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"orderDetails"`
+		Confrimations  []Confrimation `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"confrimations"`
+		CreatedAt      time.Time      `json:"createdAt"`
+		UpdatedAt      time.Time      `json:"updatedAt"`
 	}
 )

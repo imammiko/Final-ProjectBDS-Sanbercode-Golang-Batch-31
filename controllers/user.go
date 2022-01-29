@@ -19,7 +19,7 @@ func NewUserController(userService user.Service, authService auth.Service) *user
 }
 func (h *userControllers) ForgetPassword(c *gin.Context) {
 	emailInput, bolean := c.GetQuery("email")
-	if bolean == false {
+	if bolean {
 		response := utils.ApiResponse("Query tidak ditemukan", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return

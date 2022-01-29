@@ -4,14 +4,14 @@ import "time"
 
 type (
 	Confrimation struct {
-		ID             int `gorm:"primary_key"`
-		TransferAmount int
-		ImageUrl       string
-		Description    string
-		Date           string
-		OrderID        int
-		UserID         int
-		CreatedAt      time.Time
-		UpdatedAt      time.Time
+		ID             int       `gorm:"primary_key"`
+		TransferAmount int       `json:"TransferAmount"`
+		ImageUrl       string    `json:"imageUrl"`
+		Description    string    `json:"description"`
+		Date           time.Time `json:"date"`
+		OrderID        int       `json:"orderId"`
+		UserID         int       `json:"userId"`
+		CreatedAt      time.Time `json:"createdAt"`
+		UpdatedAt      time.Time `json:"updatedAt"`
 	}
 )

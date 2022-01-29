@@ -12,6 +12,9 @@ import (
 
 func SetupRouter(db *gorm.DB) *gin.Engine {
 	r := gin.Default()
+	r.Use(func(c *gin.Context) {
+		c.Set("db", db)
+	})
 	userRepository := user.NewReposiotry(db)
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
@@ -24,7 +27,18 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	r.POST("/changePassword", userController.ChangePassword)
 
 	productMiddlewareRoute := r.Group("/products")
+	r.GET("/allProducts", controllers.GetAllProduct)
 	productMiddlewareRoute.Use(middleware.JwtAuthMiddleware())
-	productMiddlewareRoute.GET("/", controllers.TestId)
+	productMiddlewareRoute.GET("", controllers.GetProductsById)
+	productMiddlewareRoute.POST("", controllers.CreateProduct)
+	productMiddlewareRoute.PATCH("/:id", controllers.UpdateProduct)
+	productMiddlewareRoute.DELETE("/:id", controllers.DeleteProduct)
+
+	orderMiddlewareRoute := r.Group("/orders")
+	orderMiddlewareRoute.Use(middleware.JwtAuthMiddleware())
+	orderMiddlewareRoute.GET("", controllers.GetAllOrderByUser)
+	orderMiddlewareRoute.POST("", controllers.MakeOrder)
+	orderMiddlewareRoute.PATCH("/:id", controllers.UpdateOrder)
+	orderMiddlewareRoute.DELETE("/:id", controllers.DeleteOrder)
 	return r
 }

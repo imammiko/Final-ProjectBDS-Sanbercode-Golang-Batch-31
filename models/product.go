@@ -6,19 +6,19 @@ import (
 
 type (
 	Product struct {
-		ID           int `gorm:"primary_key;"`
-		Name         string
-		Condition    string
-		Description  string
-		ImageUrl     string
-		Stock        int
-		Price        int
-		Heavy        string
-		UserID       int
-		CategoryID   int
-		Carts        []Cart        `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-		OrderDetails []OrderDetail `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-		CreatedAt    time.Time
-		UpdatedAt    time.Time
+		ID           int           `gorm:"primary_key;" json:"id"`
+		Name         string        `json:"name"`
+		Condition    string        `json:"condition"`
+		Description  string        `json:"description"`
+		ImageUrl     string        `json:"ImageUrl"`
+		Stock        int           `json:"stock"`
+		Price        int           `json:"price"`
+		Heavy        string        `json:"heavy"`
+		UserID       int           `json:"userID"`
+		CategoryID   int           `json:"categoryID"`
+		Carts        []Cart        `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"-"`
+		OrderDetails []OrderDetail `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"-"`
+		CreatedAt    time.Time     `json:"createdAT"`
+		UpdatedAt    time.Time     `json:"updatedAT"`
 	}
 )
