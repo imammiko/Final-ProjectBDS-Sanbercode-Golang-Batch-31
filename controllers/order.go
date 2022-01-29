@@ -22,7 +22,7 @@ type OrderInput struct {
 func GetAllOrderByUser(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var orders []models.Order
-	db.Where("User_id=?", int(c.GetUint("currentUser"))).Find(&orders)
+	db.Where("User_id=?", int(c.GetUint("currentUser"))).Preload("OrderDetails").Preload("Confrimations").Find(&orders)
 
 	response := utils.ApiResponse("All Orders by ID User", http.StatusOK, "success", &orders)
 	c.JSON(http.StatusOK, response)
@@ -81,7 +81,7 @@ func UpdateOrder(c *gin.Context) {
 		UpdatedAt:      time.Now(),
 	}
 	db.Model(&order).Updates(orderUpdate)
-	response := utils.ApiResponse("Order success update ", http.StatusOK, "success", orderUpdate)
+	response := utils.ApiResponse("Order success update ", http.StatusOK, "success", order)
 	c.JSON(http.StatusOK, response)
 }
 

@@ -35,6 +35,7 @@ type (
 		Products      []Product      `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 		Orders        []Order        `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 		Confrimations []Confrimation `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+		Categories    []Category     `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 		CreatedAt     time.Time      `json:"created_at"`
 		UpdatedAt     time.Time      `json:"updated_at"`
 	}

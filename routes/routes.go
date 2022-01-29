@@ -40,5 +40,18 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	orderMiddlewareRoute.POST("", controllers.MakeOrder)
 	orderMiddlewareRoute.PATCH("/:id", controllers.UpdateOrder)
 	orderMiddlewareRoute.DELETE("/:id", controllers.DeleteOrder)
+
+	orderDetailMiddlewareRoute := r.Group("/orderDetails")
+	orderDetailMiddlewareRoute.Use(middleware.JwtAuthMiddleware())
+	orderDetailMiddlewareRoute.POST("", controllers.CreateOrderDetail)
+	orderDetailMiddlewareRoute.PATCH("/:id", controllers.UpdateOrderDetail)
+	orderDetailMiddlewareRoute.DELETE("/:id", controllers.DeleteOrderDetail)
+
+	categoryMiddlewareRoute := r.Group("/categories")
+	categoryMiddlewareRoute.Use(middleware.JwtAuthMiddleware())
+	categoryMiddlewareRoute.GET("", controllers.GetAllCategoryByUser)
+	categoryMiddlewareRoute.POST("", controllers.CreateCategories)
+	categoryMiddlewareRoute.PATCH("/:id", controllers.UpdateCategories)
+	categoryMiddlewareRoute.DELETE("/:id", controllers.DeleteCategories)
 	return r
 }

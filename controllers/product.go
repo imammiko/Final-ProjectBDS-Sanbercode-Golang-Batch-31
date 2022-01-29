@@ -137,7 +137,7 @@ func UpdateProduct(c *gin.Context) {
 		UpdatedAt:   time.Now(),
 	}
 	db.Model(&product).Updates(updatedInput)
-	response := utils.ApiResponse("product success create ", http.StatusOK, "success", updatedInput)
+	response := utils.ApiResponse("product success update ", http.StatusOK, "success", product)
 	c.JSON(http.StatusOK, response)
 }
 
@@ -146,7 +146,8 @@ func DeleteProduct(c *gin.Context) {
 
 	var product models.Product
 	if err := db.Where("id = ?", c.Param("id")).First(&product).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		response := utils.ApiResponse("Product Dont Delete", http.StatusUnprocessableEntity, "error", nil)
+		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
 	db.Delete(&product)
