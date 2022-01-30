@@ -1,3 +1,313 @@
+definitions:
+  controllers.CartInput:
+    properties:
+      productId:
+        type: integer
+      total:
+        type: integer
+    type: object
+  controllers.CategoryInput:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    type: object
+  controllers.ConfrimationInput:
+    properties:
+      description:
+        type: string
+      imageUrl:
+        type: string
+      orderId:
+        type: integer
+      transferAmount:
+        type: integer
+    type: object
+  controllers.OrderDetailInput:
+    properties:
+      jumlah:
+        type: integer
+      orderID:
+        type: integer
+      productID:
+        type: integer
+    type: object
+  controllers.OrderInput:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      id:
+        type: integer
+      phoneNumber:
+        type: string
+      recipientsName:
+        type: string
+      statusPayment:
+        type: string
+    type: object
+  controllers.ProductInput:
+    properties:
+      ImageUrl:
+        type: string
+      categoryID:
+        type: integer
+      condition:
+        type: string
+      description:
+        type: string
+      heavy:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+      stock:
+        type: integer
+    type: object
+  controllers.RatingInput:
+    properties:
+      description:
+        type: string
+      productId:
+        type: integer
+      star:
+        type: integer
+    type: object
+  models.Cart:
+    properties:
+      createdAt:
+        type: string
+      date:
+        type: string
+      id:
+        type: integer
+      price:
+        type: integer
+      productId:
+        type: integer
+      total:
+        type: integer
+      updatedAt:
+        type: string
+      usersId:
+        type: integer
+    type: object
+  models.Category:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      products:
+        items:
+          $ref: '#/definitions/models.Product'
+        type: array
+      updatedAt:
+        type: string
+      userID:
+        type: integer
+    type: object
+  models.Confrimation:
+    properties:
+      createdAt:
+        type: string
+      date:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      imageUrl:
+        type: string
+      orderId:
+        type: integer
+      transferAmount:
+        type: integer
+      updatedAt:
+        type: string
+      userId:
+        type: integer
+    type: object
+  models.Order:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      confrimations:
+        items:
+          $ref: '#/definitions/models.Confrimation'
+        type: array
+      createdAt:
+        type: string
+      id:
+        type: integer
+      orderDate:
+        type: string
+      orderDetails:
+        items:
+          $ref: '#/definitions/models.OrderDetail'
+        type: array
+      phoneNumber:
+        type: string
+      recipientsName:
+        type: string
+      statusPayment:
+        type: string
+      updatedAt:
+        type: string
+      userID:
+        type: integer
+    type: object
+  models.OrderDetail:
+    properties:
+      createdAT:
+        type: string
+      harga:
+        type: integer
+      id:
+        type: integer
+      jumlah:
+        type: integer
+      orderId:
+        type: integer
+      productId:
+        type: integer
+      updatedAT:
+        type: string
+    type: object
+  models.Product:
+    properties:
+      ImageUrl:
+        type: string
+      categoryID:
+        type: integer
+      condition:
+        type: string
+      createdAT:
+        type: string
+      description:
+        type: string
+      heavy:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: integer
+      stock:
+        type: integer
+      updatedAT:
+        type: string
+      userID:
+        type: integer
+    type: object
+  models.Review:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      productId:
+        type: integer
+      star:
+        type: integer
+      updatedAt:
+        type: string
+      usersId:
+        type: integer
+    type: object
+  user.ChangePassword:
+    properties:
+      email:
+        type: string
+      passwordNew:
+        type: string
+      passwordOld:
+        type: string
+    required:
+    - email
+    - passwordNew
+    - passwordOld
+    type: object
+  user.LoginInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  user.RegisterUserInput:
+    properties:
+      dateOfBirth:
+        type: string
+      email:
+        type: string
+      gender:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      phoneNumber:
+        type: string
+      role:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - name
+    - password
+    - username
+    type: object
+  user.UserFormatter:
+    properties:
+      Token:
+        type: string
+      dateOfBirth:
+        type: string
+      email:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      phoneNumber:
+        type: string
+      role:
+        type: string
+      string:
+        type: string
+    type: object
+  utils.Meta:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  utils.Response:
+    properties:
+      data: {}
+      meta:
+        $ref: '#/definitions/utils.Meta'
+    type: object
 info:
   contact:
     email: support@swagger.io
@@ -7,5 +317,876 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-paths: {}
+paths:
+  /allProducts:
+    get:
+      description: Get a list of Products.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Product'
+            type: array
+      summary: Get all Product.
+      tags:
+      - Product
+  /cart:
+    get:
+      description: Get list carts refrence By userID
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Cart'
+      security:
+      - BearerToken: []
+      summary: Get carts By User Id
+      tags:
+      - Cart
+    post:
+      description: Creating a new Cart.
+      parameters:
+      - description: the body to create a new Cart
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.CartInput'
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Cart'
+      security:
+      - BearerToken: []
+      summary: Create New Cart.
+      tags:
+      - Cart
+  /cart/{cartId}/order/{orderId}:
+    get:
+      description: move a product from cart to Order Detail.
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: cartid
+        in: path
+        name: cartId
+        required: true
+        type: string
+      - description: orderId
+        in: path
+        name: orderId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      security:
+      - BearerToken: []
+      summary: cart Product to order detail.
+      tags:
+      - Cart
+  /cart/{id}:
+    delete:
+      description: Delete a Cart by id.
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Cart id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      security:
+      - BearerToken: []
+      summary: Delete one Cart.
+      tags:
+      - Cart
+    patch:
+      description: Update Cart by id.
+      parameters:
+      - description: the body to update a new Cart
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.CartInput'
+      - description: Cart id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Cart'
+      security:
+      - BearerToken: []
+      summary: Update Cart.
+      tags:
+      - Cart
+  /categories:
+    get:
+      description: Get list Category refrence By userID
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Category'
+      security:
+      - BearerToken: []
+      summary: Get Category By User Id
+      tags:
+      - Category
+    post:
+      description: Creating a new Category.
+      parameters:
+      - description: the body to create a new Category
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.CategoryInput'
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Category'
+      security:
+      - BearerToken: []
+      summary: Create New Category.
+      tags:
+      - Category
+  /categories/{id}:
+    delete:
+      description: Delete a category by id.
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Category id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      security:
+      - BearerToken: []
+      summary: Delete one Category.
+      tags:
+      - Category
+    patch:
+      description: Update Category by id.
+      parameters:
+      - description: the body to update a new Category
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.CategoryInput'
+      - description: Category id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Category'
+      security:
+      - BearerToken: []
+      summary: Update Category.
+      tags:
+      - Category
+  /changePassword:
+    post:
+      description: Change Password User.
+      parameters:
+      - description: the body to register a user
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/user.ChangePassword'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.Response'
+      summary: Change Password an user.
+      tags:
+      - Auth
+  /confrimation:
+    get:
+      description: Get list Confrimations refrence By userID
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Confrimation'
+      security:
+      - BearerToken: []
+      summary: Get Confrimations By User Id
+      tags:
+      - Confrimation
+    post:
+      description: Creating a new Confrimation.
+      parameters:
+      - description: the body to create a new Confrimation
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ConfrimationInput'
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Confrimation'
+      security:
+      - BearerToken: []
+      summary: Create New Confrimation.
+      tags:
+      - Confrimation
+  /confrimation/{id}:
+    delete:
+      description: Delete a Confrimation by id.
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Confrimation id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      security:
+      - BearerToken: []
+      summary: Delete one Confrimation.
+      tags:
+      - Confrimation
+    patch:
+      description: Update Confrimation by id.
+      parameters:
+      - description: the body to update a new Confrimation
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ConfrimationInput'
+      - description: Confrimation id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Confrimation'
+      security:
+      - BearerToken: []
+      summary: Update Confrimation.
+      tags:
+      - Confrimation
+  /confrimation/approve/{id}:
+    get:
+      description: Approve Confrimation Payment order only Role admin.
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Confrimation id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      security:
+      - BearerToken: []
+      summary: Approve Confrimation Payment.
+      tags:
+      - Confrimation
+  /forgotPassword:
+    get:
+      description: Reset password will send to email.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.Response'
+      summary: Forget Password a User.
+      tags:
+      - Auth
+  /login:
+    post:
+      description: Logging in to get jwt token to access admin or user api by roles.
+      parameters:
+      - description: the body to login a user
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/user.LoginInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.UserFormatter'
+      summary: Login as as user.
+      tags:
+      - Auth
+  /orderDetails:
+    post:
+      description: Creating a new OrderDetail.
+      parameters:
+      - description: the body to create a new OrderDetail
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.OrderDetailInput'
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.OrderDetail'
+      security:
+      - BearerToken: []
+      summary: Create New OrderDetail.
+      tags:
+      - OrderDetail
+  /orderDetails/{id}:
+    delete:
+      description: Delete a OrderDetail by id.
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: OrderDetail id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      security:
+      - BearerToken: []
+      summary: Delete one OrderDetail.
+      tags:
+      - OrderDetail
+    patch:
+      description: Update OrderDetail by id.
+      parameters:
+      - description: the body to update a new OrderDetail
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.OrderDetailInput'
+      - description: OrderDetail id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.OrderDetail'
+      security:
+      - BearerToken: []
+      summary: Update OrderDetail.
+      tags:
+      - OrderDetail
+  /orders:
+    get:
+      description: Get list orders refrence By userID
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Order'
+      security:
+      - BearerToken: []
+      summary: Get Order By User Id
+      tags:
+      - Order
+    post:
+      description: Creating a new Order.
+      parameters:
+      - description: the body to create a new Order
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.OrderInput'
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Order'
+      security:
+      - BearerToken: []
+      summary: Create New Order.
+      tags:
+      - Order
+  /orders/{id}:
+    delete:
+      description: Delete a Order by id.
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Order id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      security:
+      - BearerToken: []
+      summary: Delete one Order.
+      tags:
+      - Order
+    patch:
+      description: Update Order by id.
+      parameters:
+      - description: the body to update a new Order
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.OrderInput'
+      - description: Order id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Order'
+      security:
+      - BearerToken: []
+      summary: Update Order.
+      tags:
+      - Order
+  /products:
+    get:
+      description: Get list products refrence By userID
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+      security:
+      - BearerToken: []
+      summary: Get Products By User Id
+      tags:
+      - Product
+    post:
+      description: Creating a new Product.
+      parameters:
+      - description: the body to create a new Product
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ProductInput'
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+      security:
+      - BearerToken: []
+      summary: Create New Product.
+      tags:
+      - Product
+  /products/{id}:
+    delete:
+      description: Delete a Product by id.
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Product id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      security:
+      - BearerToken: []
+      summary: Delete one Product.
+      tags:
+      - Product
+    patch:
+      description: Update Product by id.
+      parameters:
+      - description: the body to update a new Product
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ProductInput'
+      - description: Product id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+      security:
+      - BearerToken: []
+      summary: Update Product.
+      tags:
+      - Product
+  /register:
+    post:
+      description: registering a user from public access.
+      parameters:
+      - description: the body to register a user
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/user.RegisterUserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.UserFormatter'
+      summary: Register a user.
+      tags:
+      - Auth
+  /review:
+    get:
+      description: Get list Review refrence By userID
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Review'
+      security:
+      - BearerToken: []
+      summary: Get Review By User Id
+      tags:
+      - Review
+    post:
+      description: Creating a new Review.
+      parameters:
+      - description: the body to create a new Review
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.RatingInput'
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Review'
+      security:
+      - BearerToken: []
+      summary: Create New Review.
+      tags:
+      - Review
+  /review/{id}:
+    delete:
+      description: Delete a Review by id.
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Review id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      security:
+      - BearerToken: []
+      summary: Delete one Review.
+      tags:
+      - Review
+    patch:
+      description: Update Review by id.
+      parameters:
+      - description: the body to update a new Review
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.RatingInput'
+      - description: Review id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Review'
+      security:
+      - BearerToken: []
+      summary: Update Review.
+      tags:
+      - Review
 swagger: "2.0"

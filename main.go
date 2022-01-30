@@ -18,22 +18,13 @@ import (
 
 // @termsOfService http://swagger.io/terms/
 func main() {
+	//programmatically set swagger info
 	docs.SwaggerInfo.Title = "Swagger Example API"
-	docs.SwaggerInfo.Description = "This is a sample server ecommerce."
+	docs.SwaggerInfo.Description = "This is a sample server Movie."
 	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.Host = "localhost:8080"
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
-	// config.ConnectDataBase()
-	// userRepository := user.NewReposiotry(db)
-	// user, err := userRepository.Save(models.User{
-	// 	Username:    "imamMiko1",
-	// 	Email:       "imammiko@gmail.com",
-	// 	Name:        "imam Sujatmiko",
-	// 	Password:    "1234",
-	// 	DateOfBirth: "2/desember/1995",
-	// 	Gender:      "man",
-	// 	PhoneNumber: "08955333",
-	// })
+
 	err := godotenv.Load(".env")
 
 	if err != nil {

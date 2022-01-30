@@ -18,6 +18,15 @@ type ConfrimationInput struct {
 	OrderID        int    `json:"orderId"`
 }
 
+// GetConfrimationsByUser a Rating godoc
+// @Summary Get Confrimations By User Id
+// @Description Get list Confrimations refrence By userID
+// @Tags Confrimation
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Confrimation
+// @Router /confrimation [get]
 func GeatAllConfrimationByUser(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var confrimation []models.Confrimation
@@ -27,6 +36,16 @@ func GeatAllConfrimationByUser(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// CreateConfrimation godoc
+// @Summary Create New Confrimation.
+// @Description Creating a new Confrimation.
+// @Tags Confrimation
+// @Param Body body ConfrimationInput true "the body to create a new Confrimation"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Confrimation.
+// @Router /confrimation [post]
 func CreateConfrimation(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input ConfrimationInput
@@ -62,6 +81,17 @@ func CreateConfrimation(c *gin.Context) {
 
 }
 
+// UpdateConfrimation godoc
+// @Summary Update Confrimation.
+// @Description Update Confrimation by id.
+// @Tags Confrimation
+// @Param Body body ConfrimationInput true "the body to update a new Confrimation"
+// @Produce json
+// @Param id path string true "Confrimation id"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Success 200 {object} models.Confrimation
+// @Router /confrimation/{id} [patch]
 func UpdateConfrimation(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
@@ -101,6 +131,16 @@ func UpdateConfrimation(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// DeleteConfrimation godoc
+// @Summary Delete one Confrimation.
+// @Description Delete a Confrimation by id.
+// @Tags Confrimation
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Param id path string true "Confrimation id"
+// @Success 200 {object} map[string]boolean
+// @Router /confrimation/{id} [delete]
 func DeleteConfrimation(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var Confrimation models.Confrimation
@@ -114,6 +154,16 @@ func DeleteConfrimation(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// ApproveConfrimation  godoc
+// @Summary Approve Confrimation Payment.
+// @Description Approve Confrimation Payment order only Role admin.
+// @Tags Confrimation
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Param id path string true "Confrimation id"
+// @Success 200 {object} map[string]boolean
+// @Router /confrimation/approve/{id} [get]
 func ApproveConfrimation(c *gin.Context) {
 	//ambil id yang akan di confrimation
 	// check id confrimation

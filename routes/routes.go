@@ -7,6 +7,8 @@ import (
 	"Final-ProjectBDS-Sanbercode-Golang-Batch-31/utils/auth"
 
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"     // swagger embed files
+	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 	"gorm.io/gorm"
 )
 
@@ -29,7 +31,7 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	productMiddlewareRoute := r.Group("/products")
 	r.GET("/allProducts", controllers.GetAllProduct)
 	productMiddlewareRoute.Use(middleware.JwtAuthMiddleware())
-	productMiddlewareRoute.GET("", controllers.GetProductsById)
+	productMiddlewareRoute.GET("", controllers.GetProductsByUser)
 	productMiddlewareRoute.POST("", controllers.CreateProduct)
 	productMiddlewareRoute.PATCH("/:id", controllers.UpdateProduct)
 	productMiddlewareRoute.DELETE("/:id", controllers.DeleteProduct)
@@ -64,7 +66,7 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 
 	ratingMiddleWareRoute := r.Group("/review")
 	ratingMiddleWareRoute.Use(middleware.JwtAuthMiddleware())
-	ratingMiddleWareRoute.GET("", controllers.GetRatingByID)
+	ratingMiddleWareRoute.GET("", controllers.GetRatingByUser)
 	ratingMiddleWareRoute.POST("", controllers.CreateRating)
 	ratingMiddleWareRoute.PATCH("/:id", controllers.UpdateRating)
 	ratingMiddleWareRoute.DELETE("/:id", controllers.DeleteRating)
@@ -76,5 +78,6 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	confrimationMiddlewareRoute.PATCH("/:id", controllers.UpdateConfrimation)
 	confrimationMiddlewareRoute.DELETE("/:id", controllers.DeleteConfrimation)
 	confrimationMiddlewareRoute.GET("/approve/:id", controllers.ApproveConfrimation)
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	return r
 }

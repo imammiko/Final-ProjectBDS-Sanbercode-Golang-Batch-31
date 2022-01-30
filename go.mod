@@ -7,6 +7,8 @@ require (
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/validator/v10 v10.10.0
 	github.com/joho/godotenv v1.4.0
+	github.com/swaggo/files v0.0.0-20210815190702-a29dd2bc99b2
+	github.com/swaggo/gin-swagger v1.4.0
 	github.com/swaggo/swag v1.7.8
 	golang.org/x/crypto v0.0.0-20220112180741-5e0467b6c7ce
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
@@ -40,8 +42,6 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
-	github.com/swaggo/files v0.0.0-20210815190702-a29dd2bc99b2 // indirect
-	github.com/swaggo/gin-swagger v1.4.0 // indirect
 	github.com/ugorji/go/codec v1.2.6 // indirect
 	github.com/urfave/cli/v2 v2.3.0 // indirect
 	golang.org/x/net v0.0.0-20220121210141-e204ce36a2ba // indirect

@@ -11,26 +11,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// @Summary Delete item
-// @Description Delete item
-// @Accept  json
-// @Produce  json
-// @Param   id     path    int     true        "ID"
-// @Success 204
-// @Failure 400 {string} string "400 StatusBadRequest"
-// @Failure 404 {string} string "404 not found"
-// @Router /User/{id} [delete]
-// if err != nil {
-// 	errors := utils.FormatValidationEror(err)
-// 	errorMessage := gin.H{"errors": errors}
-// 	response := utils.ApiResponse("register account failed", http.StatusUnprocessableEntity, "error", errorMessage)
-// 	c.JSON(http.StatusUnprocessableEntity, response)
-// 	return
-// }
-
-// response := utils.ApiResponse("Account has been registered", http.StatusOK, "success", formatter)
-// c.JSON(http.StatusOK, response)
-
 type ProductInput struct {
 	Name        string `json:"name"`
 	Condition   string `json:"condition"`
@@ -42,6 +22,13 @@ type ProductInput struct {
 	CategoryID  int    `json:"categoryID"`
 }
 
+// GetAllProduct godoc
+// @Summary Get all Product.
+// @Description Get a list of Products.
+// @Tags Product
+// @Produce json
+// @Success 200 {object} []models.Product
+// @Router /allProducts [get]
 func GetAllProduct(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var products []models.Product
@@ -51,7 +38,16 @@ func GetAllProduct(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func GetProductsById(c *gin.Context) {
+// GetProductsByUser a Rating godoc
+// @Summary Get Products By User Id
+// @Description Get list products refrence By userID
+// @Tags Product
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Product
+// @Router /products [get]
+func GetProductsByUser(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var products []models.Product
 	db.Where("User_id=?", int(c.GetUint("currentUser"))).Find(&products)
@@ -60,6 +56,16 @@ func GetProductsById(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// CreateProduct godoc
+// @Summary Create New Product.
+// @Description Creating a new Product.
+// @Tags Product
+// @Param Body body ProductInput true "the body to create a new Product"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Product.
+// @Router /products [post]
 func CreateProduct(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
@@ -99,6 +105,17 @@ func CreateProduct(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// UpdateProduct godoc
+// @Summary Update Product.
+// @Description Update Product by id.
+// @Tags Product
+// @Param Body body ProductInput true "the body to update a new Product"
+// @Produce json
+// @Param id path string true "Product id"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Success 200 {object} models.Product
+// @Router /products/{id} [patch]
 func UpdateProduct(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
@@ -141,12 +158,22 @@ func UpdateProduct(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// DeleteProduct godoc
+// @Summary Delete one Product.
+// @Description Delete a Product by id.
+// @Tags Product
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Param id path string true "Product id"
+// @Success 200 {object} map[string]boolean
+// @Router /products/{id} [delete]
 func DeleteProduct(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
 	var product models.Product
 	if err := db.Where("id = ?", c.Param("id")).First(&product).Error; err != nil {
-		response := utils.ApiResponse("Product Dont Delete", http.StatusUnprocessableEntity, "error", nil)
+		response := utils.ApiResponse("Product Not Found", http.StatusUnprocessableEntity, "error", nil)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}

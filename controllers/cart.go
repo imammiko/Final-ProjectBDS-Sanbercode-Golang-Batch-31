@@ -16,6 +16,15 @@ type CartInput struct {
 	ProductID int `json:"productId"`
 }
 
+// GetcartsByUser a Rating godoc
+// @Summary Get carts By User Id
+// @Description Get list carts refrence By userID
+// @Tags Cart
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Cart
+// @Router /cart [get]
 func GetAllCartByUser(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var cart []models.Cart
@@ -25,6 +34,16 @@ func GetAllCartByUser(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// CreateCart godoc
+// @Summary Create New Cart.
+// @Description Creating a new Cart.
+// @Tags Cart
+// @Param Body body CartInput true "the body to create a new Cart"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Cart.
+// @Router /cart [post]
 func CreateCart(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input CartInput
@@ -49,6 +68,18 @@ func CreateCart(c *gin.Context) {
 	response := utils.ApiResponse("Cart success create ", http.StatusOK, "success", &cart)
 	c.JSON(http.StatusOK, response)
 }
+
+// UpdateCart godoc
+// @Summary Update Cart.
+// @Description Update Cart by id.
+// @Tags Cart
+// @Param Body body CartInput true "the body to update a new Cart"
+// @Produce json
+// @Param id path string true "Cart id"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Success 200 {object} models.Cart
+// @Router /cart/{id} [patch]
 func UpdateCart(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var cart models.Cart
@@ -85,6 +116,16 @@ func UpdateCart(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// DeleteCart godoc
+// @Summary Delete one Cart.
+// @Description Delete a Cart by id.
+// @Tags Cart
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Param id path string true "Cart id"
+// @Success 200 {object} map[string]boolean
+// @Router /cart/{id} [delete]
 func DeleteCart(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
@@ -99,6 +140,17 @@ func DeleteCart(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// CartAddToOrder  godoc
+// @Summary cart Product to order detail.
+// @Description move a product from cart to Order Detail.
+// @Tags Cart
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Param cartId path string true "cartid"
+// @Param orderId path string true "orderId"
+// @Success 200 {object} map[string]boolean
+// @Router /cart/{cartId}/order/{orderId} [get]
 func CartAddToOrder(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	orderId := c.Param("orderId")

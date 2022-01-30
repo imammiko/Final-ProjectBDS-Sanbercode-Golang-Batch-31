@@ -15,6 +15,16 @@ type OrderDetailInput struct {
 	OrderID   int `json:"orderID"`
 }
 
+// CreateOrderDetail godoc
+// @Summary Create New OrderDetail.
+// @Description Creating a new OrderDetail.
+// @Tags OrderDetail
+// @Param Body body OrderDetailInput true "the body to create a new OrderDetail"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.OrderDetail.
+// @Router /orderDetails [post]
 func CreateOrderDetail(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input OrderDetailInput
@@ -47,6 +57,17 @@ func CreateOrderDetail(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// UpdateOrderDetail godoc
+// @Summary Update OrderDetail.
+// @Description Update OrderDetail by id.
+// @Tags OrderDetail
+// @Param Body body OrderDetailInput true "the body to update a new OrderDetail"
+// @Produce json
+// @Param id path string true "OrderDetail id"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Success 200 {object} models.OrderDetail
+// @Router /orderDetails/{id} [patch]
 func UpdateOrderDetail(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input OrderDetailInput
@@ -84,6 +105,16 @@ func UpdateOrderDetail(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// DeleteOrderDetail godoc
+// @Summary Delete one OrderDetail.
+// @Description Delete a OrderDetail by id.
+// @Tags OrderDetail
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Param id path string true "OrderDetail id"
+// @Success 200 {object} map[string]boolean
+// @Router /orderDetails/{id} [delete]
 func DeleteOrderDetail(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 

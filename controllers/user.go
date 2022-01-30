@@ -17,6 +17,14 @@ type userControllers struct {
 func NewUserController(userService user.Service, authService auth.Service) *userControllers {
 	return &userControllers{userService, authService}
 }
+
+// ForgetPassword godoc
+// @Summary Forget Password a User.
+// @Description Reset password will send to email.
+// @Tags Auth
+// @Produce json
+// @Success 200 {object} utils.Response
+// @Router /forgotPassword [get]
 func (h *userControllers) ForgetPassword(c *gin.Context) {
 	emailInput, bolean := c.GetQuery("email")
 	if bolean {
@@ -36,6 +44,14 @@ func (h *userControllers) ForgetPassword(c *gin.Context) {
 
 }
 
+// ChangePassword godoc
+// @Summary Change Password an user.
+// @Description Change Password User.
+// @Tags Auth
+// @Param Body body user.ChangePassword true "the body to register a user"
+// @Produce json
+// @Success 200 {object} utils.Response
+// @Router /changePassword [post]
 func (h *userControllers) ChangePassword(c *gin.Context) {
 	var input user.ChangePassword
 
@@ -57,6 +73,14 @@ func (h *userControllers) ChangePassword(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// Register godoc
+// @Summary Register a user.
+// @Description registering a user from public access.
+// @Tags Auth
+// @Param Body body user.RegisterUserInput true "the body to register a user"
+// @Produce json
+// @Success 200 {object} user.UserFormatter
+// @Router /register [post]
 func (h *userControllers) RegisterUser(c *gin.Context) {
 	var input user.RegisterUserInput
 
@@ -90,6 +114,14 @@ func (h *userControllers) RegisterUser(c *gin.Context) {
 	// err:= c.ShouldBindJSON(inpu)
 }
 
+// LoginUser godoc
+// @Summary Login as as user.
+// @Description Logging in to get jwt token to access admin or user api by roles.
+// @Tags Auth
+// @Param Body body user.LoginInput true "the body to login a user"
+// @Produce json
+// @Success 200 {object} user.UserFormatter
+// @Router /login [post]
 func (h *userControllers) Login(c *gin.Context) {
 	var input user.LoginInput
 	err := c.ShouldBindJSON(&input)
@@ -117,37 +149,5 @@ func (h *userControllers) Login(c *gin.Context) {
 	}
 	formatter := user.FormatUser(loggedinUser, token)
 	response := utils.ApiResponse("succesfuly loggedin", http.StatusOK, "success", formatter)
-	c.JSON(http.StatusOK, response)
-}
-
-func (h *userControllers) CheckEmailAvailability(c *gin.Context) {
-	var input user.CheckEmailInput
-	err := c.ShouldBindJSON(&input)
-	if err != nil {
-		errors := utils.FormatValidationEror(err)
-		errorMessage := gin.H{"errors": errors}
-		response := utils.ApiResponse("Email checkong failed", http.StatusUnprocessableEntity, "error", errorMessage)
-		c.JSON(http.StatusUnprocessableEntity, response)
-		return
-	}
-	isEmailAvailable, err := h.userService.IsEmailAvailable(input)
-	if err != nil {
-		errorMessage := gin.H{"errors": "Server error"}
-		response := utils.ApiResponse("Email checking failed", http.StatusUnprocessableEntity, "error", errorMessage)
-		c.JSON(http.StatusUnprocessableEntity, response)
-		return
-	}
-
-	data := gin.H{
-		"is_available": isEmailAvailable,
-	}
-
-	metaMessage := "Email has been registered"
-
-	if isEmailAvailable {
-		metaMessage = "Email is available"
-	}
-
-	response := utils.ApiResponse(metaMessage, http.StatusOK, "success", data)
 	c.JSON(http.StatusOK, response)
 }

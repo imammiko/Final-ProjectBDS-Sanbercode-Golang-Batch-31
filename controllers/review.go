@@ -15,7 +15,16 @@ type RatingInput struct {
 	ProductID   int    `json:"productId"`
 }
 
-func GetRatingByID(c *gin.Context) {
+// GetReviewByUser a Rating godoc
+// @Summary Get Review By User Id
+// @Description Get list Review refrence By userID
+// @Tags Review
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Review
+// @Router /review [get]
+func GetRatingByUser(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var rating []models.Review
 	db.Where("User_id=?", int(c.GetUint("currentUser"))).Find(&rating)
@@ -24,6 +33,16 @@ func GetRatingByID(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// CreateReview godoc
+// @Summary Create New Review.
+// @Description Creating a new Review.
+// @Tags Review
+// @Param Body body RatingInput true "the body to create a new Review"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Review
+// @Router /review [post]
 func CreateRating(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input RatingInput
@@ -60,6 +79,17 @@ func CreateRating(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// UpdateReview godoc
+// @Summary Update Review.
+// @Description Update Review by id.
+// @Tags Review
+// @Param Body body RatingInput true "the body to update a new Review"
+// @Produce json
+// @Param id path string true "Review id"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Success 200 {object} models.Review
+// @Router /review/{id} [patch]
 func UpdateRating(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var rating models.Review
@@ -105,6 +135,16 @@ func UpdateRating(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// DeleteReview godoc
+// @Summary Delete one Review.
+// @Description Delete a Review by id.
+// @Tags Review
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Param id path string true "Review id"
+// @Success 200 {object} map[string]boolean
+// @Router /review/{id} [delete]
 func DeleteRating(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 

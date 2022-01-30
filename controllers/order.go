@@ -19,6 +19,15 @@ type OrderInput struct {
 	PhoneNumber    string               `json:"phoneNumber"`
 }
 
+// GetOrderByUser a Rating godoc
+// @Summary Get Order By User Id
+// @Description Get list orders refrence By userID
+// @Tags Order
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Order
+// @Router /orders [get]
 func GetAllOrderByUser(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var orders []models.Order
@@ -28,6 +37,16 @@ func GetAllOrderByUser(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// CreateOrder godoc
+// @Summary Create New Order.
+// @Description Creating a new Order.
+// @Tags Order
+// @Param Body body OrderInput true "the body to create a new Order"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Order.
+// @Router /orders [post]
 func MakeOrder(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input OrderInput
@@ -49,6 +68,17 @@ func MakeOrder(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// UpdateOrder godoc
+// @Summary Update Order.
+// @Description Update Order by id.
+// @Tags Order
+// @Param Body body OrderInput true "the body to update a new Order"
+// @Produce json
+// @Param id path string true "Order id"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Success 200 {object} models.Order
+// @Router /orders/{id} [patch]
 func UpdateOrder(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
@@ -85,6 +115,16 @@ func UpdateOrder(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// DeleteOrder godoc
+// @Summary Delete one Order.
+// @Description Delete a Order by id.
+// @Tags Order
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Param id path string true "Order id"
+// @Success 200 {object} map[string]boolean
+// @Router /orders/{id} [delete]
 func DeleteOrder(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
