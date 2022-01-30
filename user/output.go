@@ -8,6 +8,7 @@ type UserFormatter struct {
 	Email       string        `json:"email"`
 	DateOfBirth string        `json:"dateOfBirth"`
 	Gender      models.Gender `json:"gender"`
+	Role        models.Role   `json:"role"`
 	PhoneNumber string        `json:"phoneNumber"`
 	Token       string        `json:"Token"`
 }
@@ -19,6 +20,7 @@ func FormatUser(user models.User, token string) UserFormatter {
 		Email:       user.Email,
 		DateOfBirth: user.DateOfBirth,
 		Gender:      user.Gender,
+		Role:        user.Role,
 		PhoneNumber: user.PhoneNumber,
 		Token:       token,
 	}

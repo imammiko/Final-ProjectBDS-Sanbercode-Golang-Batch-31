@@ -8,6 +8,7 @@ type RegisterUserInput struct {
 	Email       string        `json:"email" binding:"required,email"`
 	Password    string        `json:"password" binding:"required"`
 	DateOfBirth string        `json:"dateOfBirth"`
+	Role        models.Role   `json:"role"`
 	Gender      models.Gender `gorm:"type:ENUM('man','woman');" json:"gender"`
 	PhoneNumber string        `json:"phoneNumber"`
 }

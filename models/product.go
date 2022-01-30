@@ -16,6 +16,7 @@ type (
 		Heavy        string        `json:"heavy"`
 		UserID       int           `json:"userID"`
 		CategoryID   int           `json:"categoryID"`
+		Review       []Review      `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"-"`
 		Carts        []Cart        `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"-"`
 		OrderDetails []OrderDetail `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"-"`
 		CreatedAt    time.Time     `json:"createdAT"`

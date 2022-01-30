@@ -53,5 +53,28 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	categoryMiddlewareRoute.POST("", controllers.CreateCategories)
 	categoryMiddlewareRoute.PATCH("/:id", controllers.UpdateCategories)
 	categoryMiddlewareRoute.DELETE("/:id", controllers.DeleteCategories)
+
+	cartMiddlewareRoute := r.Group("/cart")
+	cartMiddlewareRoute.Use(middleware.JwtAuthMiddleware())
+	cartMiddlewareRoute.GET("", controllers.GetAllCartByUser)
+	cartMiddlewareRoute.POST("", controllers.CreateCart)
+	cartMiddlewareRoute.PATCH("/:id", controllers.UpdateCart)
+	cartMiddlewareRoute.DELETE("/:id", controllers.DeleteCart)
+	cartMiddlewareRoute.GET("/:cartId/order/:orderId", controllers.CartAddToOrder)
+
+	ratingMiddleWareRoute := r.Group("/review")
+	ratingMiddleWareRoute.Use(middleware.JwtAuthMiddleware())
+	ratingMiddleWareRoute.GET("", controllers.GetRatingByID)
+	ratingMiddleWareRoute.POST("", controllers.CreateRating)
+	ratingMiddleWareRoute.PATCH("/:id", controllers.UpdateRating)
+	ratingMiddleWareRoute.DELETE("/:id", controllers.DeleteRating)
+
+	confrimationMiddlewareRoute := r.Group("/confrimation")
+	confrimationMiddlewareRoute.Use(middleware.JwtAuthMiddleware())
+	confrimationMiddlewareRoute.GET("", controllers.GeatAllConfrimationByUser)
+	confrimationMiddlewareRoute.POST("", controllers.CreateConfrimation)
+	confrimationMiddlewareRoute.PATCH("/:id", controllers.UpdateConfrimation)
+	confrimationMiddlewareRoute.DELETE("/:id", controllers.DeleteConfrimation)
+	confrimationMiddlewareRoute.GET("/approve/:id", controllers.ApproveConfrimation)
 	return r
 }
