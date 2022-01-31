@@ -20,7 +20,7 @@ import (
 // @termsOfService http://swagger.io/terms/
 func main() {
 	//programmatically set swagger info
-	err := godotenv.Load(".env")
+	err := godotenv.Load()
 	docs.SwaggerInfo.Title = "Swagger Example API"
 	docs.SwaggerInfo.Description = "This is a sample server Movie."
 	docs.SwaggerInfo.Version = "1.0"
