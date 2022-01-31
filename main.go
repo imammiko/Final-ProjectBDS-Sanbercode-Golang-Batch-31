@@ -4,6 +4,7 @@ import (
 	"Final-ProjectBDS-Sanbercode-Golang-Batch-31/config"
 	"Final-ProjectBDS-Sanbercode-Golang-Batch-31/docs"
 	"Final-ProjectBDS-Sanbercode-Golang-Batch-31/routes"
+	"Final-ProjectBDS-Sanbercode-Golang-Batch-31/utils"
 	"log"
 
 	"github.com/joho/godotenv"
@@ -19,13 +20,12 @@ import (
 // @termsOfService http://swagger.io/terms/
 func main() {
 	//programmatically set swagger info
+	err := godotenv.Load(".env")
 	docs.SwaggerInfo.Title = "Swagger Example API"
 	docs.SwaggerInfo.Description = "This is a sample server Movie."
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = "localhost:8080"
+	docs.SwaggerInfo.Host = utils.Getenv("SWAGGER_HOST", "localhost:8080")
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
-
-	err := godotenv.Load(".env")
 
 	if err != nil {
 		log.Fatalf("Error loading .env file")
