@@ -1,16 +1,14 @@
 package user
 
-import "Final-ProjectBDS-Sanbercode-Golang-Batch-31/models"
-
 type RegisterUserInput struct {
-	Name        string        `json:"name" binding:"required"`
-	Username    string        `json:"username" binding:"required"`
-	Email       string        `json:"email" binding:"required,email"`
-	Password    string        `json:"password" binding:"required"`
-	DateOfBirth string        `json:"dateOfBirth"`
-	Role        models.Role   `json:"role"`
-	Gender      models.Gender `gorm:"type:ENUM('man','woman');" json:"gender"`
-	PhoneNumber string        `json:"phoneNumber"`
+	Name        string `json:"name" binding:"required"`
+	Username    string `json:"username" binding:"required"`
+	Email       string `json:"email" binding:"required,email"`
+	Password    string `json:"password" binding:"required"`
+	DateOfBirth string `json:"dateOfBirth"`
+	Role        string `json:"role"`
+	Gender      string `json:"gender"`
+	PhoneNumber string `json:"phoneNumber"`
 }
 
 type LoginInput struct {

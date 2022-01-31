@@ -11,12 +11,12 @@ import (
 )
 
 type OrderInput struct {
-	ID             int                  `gorm:"primary_key" json:"id"`
-	RecipientsName string               `json:"recipientsName"`
-	City           string               `json:"city"`
-	Address        string               `json:"address"`
-	StatusPayment  models.StatusPayment `json:"statusPayment"`
-	PhoneNumber    string               `json:"phoneNumber"`
+	ID             int    `gorm:"primary_key" json:"id"`
+	RecipientsName string `json:"recipientsName"`
+	City           string `json:"city"`
+	Address        string `json:"address"`
+	StatusPayment  string `json:"statusPayment"`
+	PhoneNumber    string `json:"phoneNumber"`
 }
 
 // GetOrderByUser a Rating godoc
