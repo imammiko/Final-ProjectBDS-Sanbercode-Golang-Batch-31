@@ -23,6 +23,7 @@ func NewUserController(userService user.Service, authService auth.Service) *user
 // @Description Reset password will send to email.
 // @Tags Auth
 // @Produce json
+// @Param        email    query     string  false  "email forgot password"  Format(email)
 // @Success 200 {object} utils.Response
 // @Router /forgotPassword [get]
 func (h *userControllers) ForgetPassword(c *gin.Context) {

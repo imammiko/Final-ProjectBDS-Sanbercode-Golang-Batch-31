@@ -692,6 +692,15 @@ var doc = `{
                     "Auth"
                 ],
                 "summary": "Forget Password a User.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "email",
+                        "description": "email forgot password",
+                        "name": "email",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

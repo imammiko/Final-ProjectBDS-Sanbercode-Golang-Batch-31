@@ -735,6 +735,12 @@ paths:
   /forgotPassword:
     get:
       description: Reset password will send to email.
+      parameters:
+      - description: email forgot password
+        format: email
+        in: query
+        name: email
+        type: string
       produces:
       - application/json
       responses:
