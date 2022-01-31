@@ -21,15 +21,14 @@ import (
 func main() {
 	//programmatically set swagger info
 	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
 	docs.SwaggerInfo.Title = "Swagger Example API"
 	docs.SwaggerInfo.Description = "This is a sample server Movie."
 	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.Host = utils.Getenv("SWAGGER_HOST", "localhost:8080")
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
-
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
 
 	db := config.ConnectDataBase()
 	sqlDB, _ := db.DB()
